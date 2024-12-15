@@ -19,4 +19,17 @@ class AuthenticationRoute {
             }
         }
     }
+
+    @Bean
+    fun keyRoutes(
+        builder: RouteLocatorBuilder
+    ): RouteLocator {
+        return builder.routes {
+            route() {
+                path("/.well-known/**")
+                uri("lb://AUTH")
+            }
+        }
+    }
+
 }
