@@ -28,6 +28,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("io.projectreactor:reactor-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("io.netty:netty-all:4.1.115.Final")
 }
 
 dependencyManagement {
