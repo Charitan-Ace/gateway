@@ -9,27 +9,20 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class AuthenticationRoute {
     @Bean
-    fun authenticationRoutes(
-        builder: RouteLocatorBuilder
-    ): RouteLocator {
-        return builder.routes {
-            route() {
+    fun authenticationRoutes(builder: RouteLocatorBuilder): RouteLocator =
+        builder.routes {
+            route {
                 path("/api/auth/**")
                 uri("lb://AUTH")
             }
         }
-    }
 
     @Bean
-    fun keyRoutes(
-        builder: RouteLocatorBuilder
-    ): RouteLocator {
-        return builder.routes {
-            route() {
+    fun keyRoutes(builder: RouteLocatorBuilder): RouteLocator =
+        builder.routes {
+            route {
                 path("/.well-known/**")
                 uri("lb://AUTH")
             }
         }
-    }
-
 }
