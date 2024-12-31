@@ -26,7 +26,7 @@ internal class JwtConsumer(
                 .toKey()
         if (jwk is PrivateKey) {
             jwtService.encPrivateKey = jwk
-            logger.info("Encryption private key updated")
+            logger.info("Encryption ${jwk.format} private key updated")
         }
     }
 
@@ -35,7 +35,9 @@ internal class JwtConsumer(
         callback: ConsumerSeekCallback,
     ) {
         assignments.keys.forEach { topicPartition ->
-            callback.seekRelative(topicPartition.topic(), topicPartition.partition(), -1, false)
+            if (topicPartition.topic() == "key.encryption.private.change") {
+                callback.seekRelative(topicPartition.topic(), topicPartition.partition(), -1, false)
+            }
         }
     }
 }
