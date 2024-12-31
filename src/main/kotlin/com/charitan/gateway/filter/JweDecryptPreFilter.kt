@@ -21,18 +21,19 @@ class JweDecryptPreFilter(
         val authCookie =
             exchange.request.cookies[authenticationCookieKey]
                 ?.first()
-                ?: return Mono.empty()
+                ?: return chain.filter(exchange)
 
-        val ex =
+        val jws = jwtService.parseJweContent(authCookie.value.split("=").last())
+
+        return chain.filter(
             exchange
                 .mutate()
                 .request(
                     exchange.request
                         .mutate()
-                        .header("Cookie", "new cokoie")
+                        .header("Cookie", "$authenticationCookieKey=$jws")
                         .build(),
-                ).build()
-
-        return chain.filter(ex)
+                ).build(),
+        )
     }
 }

@@ -9,14 +9,11 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class ProfileRoute {
     @Bean
-    fun profileRoutes(
-        builder: RouteLocatorBuilder
-    ): RouteLocator {
-        return builder.routes {
-            route() {
+    fun profileRoutes(builder: RouteLocatorBuilder): RouteLocator =
+        builder.routes {
+            route {
                 path("/api/profile/**")
                 uri("lb://PROFILE")
             }
         }
-    }
 }
