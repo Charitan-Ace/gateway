@@ -1,6 +1,8 @@
 package com.charitan.gateway.filter
 
 import com.charitan.gateway.jwt.JwtExternalService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.cloud.gateway.filter.GlobalFilter
@@ -14,6 +16,8 @@ class JweDecryptPreFilter(
     private val authenticationCookieKey: String,
     private val jwtService: JwtExternalService,
 ) : GlobalFilter {
+    private val logger: Logger = LoggerFactory.getLogger(this.javaClass)
+
     override fun filter(
         exchange: ServerWebExchange,
         chain: GatewayFilterChain,
@@ -23,17 +27,25 @@ class JweDecryptPreFilter(
                 ?.first()
                 ?: return chain.filter(exchange)
 
-        val jws = jwtService.parseJweContent(authCookie.value.split("=").last())
+        logger.debug("Parsing ${authCookie.name} cookie encrypted content")
 
-        return chain.filter(
-            exchange
-                .mutate()
-                .request(
-                    exchange.request
-                        .mutate()
-                        .header("Cookie", "$authenticationCookieKey=$jws")
-                        .build(),
-                ).build(),
-        )
+        try {
+            val jwe = authCookie.value.removePrefix("$authenticationCookieKey=")
+            val jws = jwtService.parseJweContent(jwe)
+            return chain.filter(
+                exchange
+                    .mutate()
+                    .request(
+                        exchange.request
+                            .mutate()
+                            .header("Cookie", "$authenticationCookieKey=$jws")
+                            .build(),
+                    ).build(),
+            )
+        } catch (e: Exception) {
+            logger.error(e.message)
+        }
+
+        return chain.filter(exchange)
     }
 }
