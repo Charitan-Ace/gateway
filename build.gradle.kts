@@ -26,6 +26,11 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("io.netty:netty-resolver-dns-native-macos:4.2.0.RC1") {
+        artifact {
+            classifier = "osx-aarch_64"
+        }
+    }
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
