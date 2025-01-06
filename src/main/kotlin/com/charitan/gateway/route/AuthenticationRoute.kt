@@ -25,7 +25,7 @@ class AuthenticationRoute {
     ) = builder.routes {
         // decrypt body jwe
         route {
-            path("/api/auth/register", "api/auth/login")
+            path("/api/auth/register", "/api/auth/login")
             filters {
                 this.modifyRequestBody(
                     String::class.java,
@@ -41,7 +41,7 @@ class AuthenticationRoute {
         }
         // route everything else
         route {
-            path("/api/auth/**")
+            path("/api/auth/**", "/api/admin/auth/**")
             uri("lb://AUTH")
         }
     }

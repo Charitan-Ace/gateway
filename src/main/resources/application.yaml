@@ -6,6 +6,8 @@ spring:
     consumer:
       group-id: "admin-gateway-service"
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    admin:
+      auto-create: false
 server:
   port: 8080
 eureka:
