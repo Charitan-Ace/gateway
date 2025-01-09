@@ -8,12 +8,19 @@ spring:
           '[/**]':
             allowed-origins:
               - "http://localhost:5173"
+              - "https://r.stripe.com"
             allow-credentials: true
             allowedMethods:
               - GET
               - POST
+              - OPTIONS
               - PATCH
               - DELETE
+            allowedHeaders:
+              - "Access-Control-Allow-Origin"
+              - "Content-Type"
+              - "Authorization"
+
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
