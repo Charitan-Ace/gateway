@@ -16,7 +16,7 @@ internal class JwtConsumer(
 ) : AbstractConsumerSeekAware() {
     private val logger = LoggerFactory.getLogger(JwtConsumer::class.java)
 
-    @KafkaListener(topics = ["key.encryption.private.change"], groupId = "admin-gateway-service")
+    @KafkaListener(topics = ["key.encryption.private.change"])
     fun encPrivateKeyConsumer(jwkString: String) {
         val jwk: Key =
             Jwks
@@ -35,9 +35,8 @@ internal class JwtConsumer(
         callback: ConsumerSeekCallback,
     ) {
         assignments.keys.forEach { topicPartition ->
-            if (topicPartition.topic() == "key.encryption.private.change") {
-                callback.seekRelative(topicPartition.topic(), topicPartition.partition(), -1, false)
-            }
+            logger.info("Trying to change partition offset ${topicPartition.topic()}...")
+            callback.seekRelative(topicPartition.topic(), topicPartition.partition(), -1, false)
         }
     }
 }
