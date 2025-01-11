@@ -16,7 +16,11 @@ internal class JwtConsumer(
 ) : AbstractConsumerSeekAware() {
     private val logger = LoggerFactory.getLogger(JwtConsumer::class.java)
 
-    @KafkaListener(topics = ["key.encryption.private.change"])
+    // random consumer group to act as subscriber to key broadcast
+    @KafkaListener(
+        topics = ["key.encryption.private.change"],
+        groupId = "gateway-" + "#{T(java.util.UUID).randomUUID()}",
+    )
     fun encPrivateKeyConsumer(jwkString: String) {
         val jwk: Key =
             Jwks

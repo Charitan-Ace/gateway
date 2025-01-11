@@ -10,13 +10,13 @@ spring:
               - "http://localhost:5173"
               - "https://r.stripe.com"
             allow-credentials: true
-            allowedMethods:
+            allowed-methods:
               - GET
               - POST
               - OPTIONS
               - PATCH
               - DELETE
-            allowedHeaders:
+            allowed-headers:
               - "Access-Control-Allow-Origin"
               - "Content-Type"
               - "Authorization"
@@ -25,7 +25,7 @@ spring:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
       group-id: "gateway-service"
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     admin:
       auto-create: false
 server:
