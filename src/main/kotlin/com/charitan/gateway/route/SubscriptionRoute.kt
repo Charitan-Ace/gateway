@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class SubscriptionRoute {
     @Bean
-    fun donationRoutes(builder: RouteLocatorBuilder): RouteLocator =
+    fun subscriptionRoutes(builder: RouteLocatorBuilder): RouteLocator =
         builder.routes {
             route {
                 path("/subscription/**")
