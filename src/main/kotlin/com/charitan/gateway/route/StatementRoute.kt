@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class StatementRoute {
     @Bean
-    fun statementRoute(builder: RouteLocatorBuilder): RouteLocator =
+    fun statementRoutes(builder: RouteLocatorBuilder): RouteLocator =
         builder.routes {
             route {
                 path("/api/statement/**")
