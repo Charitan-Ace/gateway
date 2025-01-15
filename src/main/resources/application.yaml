@@ -17,6 +17,7 @@ spring:
               - "http://localhost:5180"
               - "https://admin.tail03350e.ts.net"
               - "https://end-user.tail03350e.ts.net"
+              - "https://charitan.tail03350e.ts.net"
               - "https://r.stripe.com"
             allow-credentials: true
             allowed-methods:
@@ -29,7 +30,6 @@ spring:
               - "Access-Control-Allow-Origin"
               - "Content-Type"
               - "Authorization"
-
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
@@ -45,3 +45,4 @@ eureka:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
   instance:
     prefer-ip-address: true
+
